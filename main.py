@@ -1,5 +1,6 @@
 import pygame
 from constants import *
+from player import *
 
 def main():
     pygame.init()
@@ -9,6 +10,14 @@ def main():
     print(f"Screen height: {SCREEN_HEIGHT}")
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
+    #Frame limiting
+    clock = pygame.time.Clock()
+    dt = 0
+
+    x = SCREEN_WIDTH / 2
+    y = SCREEN_HEIGHT / 2
+    player = Player(x, y)
+
     while True:
         # Handles window close button
         for event in pygame.event.get():
@@ -16,6 +25,9 @@ def main():
                 return
 
         screen.fill("black")
+        player.draw(screen)
+
+        dt = (clock.tick(60) / 1000)
         pygame.display.flip()
 
 
