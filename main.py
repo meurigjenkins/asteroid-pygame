@@ -10,25 +10,37 @@ def main():
     print(f"Screen height: {SCREEN_HEIGHT}")
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-    #Frame limiting
+    # Frame limiting
     clock = pygame.time.Clock()
     dt = 0
 
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
+
+    # Groups
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
+
     player = Player(x, y)
 
+    # Game Loop
     while True:
+
         # Handles window close button
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
 
-        dt = (clock.tick(60) / 1000)
-        player.update(dt)
         
+        dt = (clock.tick(60) / 1000)
+        updatable.update(dt)
+
         screen.fill("black")
-        player.draw(screen)
+        
+        for item in drawable:
+            item.draw(screen)
+            
 
         pygame.display.flip()
 
